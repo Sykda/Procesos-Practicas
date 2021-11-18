@@ -1,11 +1,13 @@
 package com.psp.ejercicio2;
 
-
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Filosofo implements Runnable {
 
     private final Object leftFork;
     private final Object rightFork;
+    DateTimeFormatter isoFecha = DateTimeFormatter.ofPattern("hh:mm:ss");
 
     Filosofo(Object left, Object right) {
         this.leftFork = left;
@@ -21,15 +23,18 @@ public class Filosofo implements Runnable {
     public void run() {
         try {
           
-          doAction("que estoy haciendo?"); 
+          doAction("pensando..."); 
 
 		  while (true) {
                
                 synchronized (leftFork) {
-
+                		doAction(LocalTime.now().format(isoFecha).toString()+": Coje el palillo izquierdo");
+   
                 	synchronized (rightFork) {
-                    }
-                }
+                		doAction(LocalTime.now().format(isoFecha).toString()+": Coje el palillo derecho");
+                    }doAction(LocalTime.now().format(isoFecha).toString()+": Deja el palillo derecho");
+                }doAction(LocalTime.now().format(isoFecha).toString()+": Deja el palillo izquierdo");
+                doAction(LocalTime.now().format(isoFecha).toString()+": pensando...");
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
