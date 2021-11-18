@@ -36,6 +36,7 @@ class Puente {
   synchronized public void terminaPaso(Persona persona) {
     this.peso -= persona.getPeso();
     this.numPersonas--;
+    
   }
 }
 
@@ -60,38 +61,44 @@ class Persona implements Runnable {
 
   @Override
   public void run() {
-
    
 
+	System.out.println("- "+idPersona+" de "+this.peso+" kg quiere cruzar, en el puente "+puente.getPeso()+" kg, "+puente.getNumPersonas()+" persona.");
     boolean autorizado = false;
     while (!autorizado) {
       synchronized (this.puente) {
         autorizado = this.puente.autorizacionPaso(this);
         if (!autorizado) {
           try {
-            this.puente.wait();
+        	System.out.println("# "+idPersona+ " debe esperar.");
+            this.puente.wait();            
           } catch (InterruptedException ex) {
+        	  System.out.println("Ha habido un error: "+ex.getMessage());
           }
-        }
+          System.out.println("> "+idPersona+ " con peso "+ this.peso+" puede cruzar, puente soporta peso "+puente.getPeso()+", con "+puente.getNumPersonas()+ " personas.");
+        }        
       }
     }
-
+    
+ 
    
 
     Random r = new Random();
     int tiempoPaso = this.tMinPaso + r.nextInt(this.tMaxPaso - this.tMinPaso + 1);
+    System.out.println(this.idPersona+" va a tardar "+tiempoPaso+" en cruzar");
     try {
     	
       Thread.sleep(1000*tiempoPaso);
-      
+            
     } catch (InterruptedException ex) {
-    	
+    	 System.out.println("Ha habido un error: "+ex.getMessage());
     }
-
+    
+    
     synchronized (this.puente) {
-      this.puente.terminaPaso(this);
-
+      this.puente.terminaPaso(this);      
       puente.notifyAll();
+      System.out.println("< "+idPersona+" sale del puente, puente soporta peso "+puente.getPeso()+", "+puente.getNumPersonas()+" persona.");
     }
   }
 }
@@ -117,6 +124,8 @@ public class PasoPorPuente {
 
       int tParaLlegadaPersona = tMinParaLlegadaPersona + r.nextInt(
               tMaxParaLlegadaPersona - tMinParaLlegadaPersona + 1);
+      System.out.println("Siguiente persona llega en "+tParaLlegadaPersona);
+      
      
       int pesoPersona = minPesoPersona + r.nextInt(
               maxPesoPersona - minPesoPersona + 1);
@@ -125,7 +134,7 @@ public class PasoPorPuente {
       try {
         Thread.sleep(1000*tParaLlegadaPersona);
       } catch (InterruptedException ex) {
-
+    	  System.out.println("Ha habido un error: "+ex.getMessage());
       }
 
       Thread hiloPersona = new Thread(new Persona(puente, pesoPersona, tMinPaso, tMaxPaso, "P"+idPersona));
