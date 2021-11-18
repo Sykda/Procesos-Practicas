@@ -1,7 +1,7 @@
 package com.psp.ejercicio1;
 
 class Cliente implements Runnable {
-	
+
 	String nombre;
 	Barberia tienda;
 
@@ -13,11 +13,10 @@ class Cliente implements Runnable {
 		return nombre;
 	}
 
-
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
+
 	public void run() {
 		tienda.add(this);
 	}

@@ -1,6 +1,7 @@
 package com.psp.ejercicio1;
 
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 class Barberia {

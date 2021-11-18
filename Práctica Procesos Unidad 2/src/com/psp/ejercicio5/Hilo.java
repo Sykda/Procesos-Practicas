@@ -5,7 +5,7 @@ import java.util.Random;
 class Hilo implements Runnable {
 
 	private final String nombre;
-	
+
 	private Thread hilo;
 
 	public void setHilo(Thread hilo) {
@@ -19,7 +19,7 @@ class Hilo implements Runnable {
 	@Override
 	public void run() {
 
-		if (hilo!=null) {
+		if (hilo != null) {
 
 			try {
 				hilo.join();
@@ -27,9 +27,9 @@ class Hilo implements Runnable {
 				System.out.println("Hilo principal interrumpido.");
 			}
 		}
-		
+
 		System.out.printf("Hola, soy el hilo: %s.\n", this.nombre);
-		
+
 		for (int i = 0; i < 5; i++) {
 			Random r = new Random();
 			int pausa = 10 + r.nextInt(500 - 10);

@@ -12,16 +12,16 @@ public class Rana {
 
 		ScheduledExecutorService ses = Executors.newScheduledThreadPool(0);
 		Comer comer = new Comer();
-		
+
 		try {
 
 			System.out.println("La rana sale a comer a las " + Comer.fecha());
 
 			ses.scheduleWithFixedDelay(comer, 5, 3, TimeUnit.SECONDS);
-			ses.awaitTermination(30, TimeUnit.SECONDS);			
+			ses.awaitTermination(30, TimeUnit.SECONDS);
 			ses.shutdown();
 			System.out.println("La rana se ha dormido");
-			
+
 		} catch (InterruptedException e) {
 			System.out.println("Ha habido un error: " + e.getMessage());
 		}
