@@ -1,0 +1,66 @@
+Identifique la sección critica, los problemas de concurrencia, comente el código adjunto,
+ modifíquelo para que imprima por consola la información relevante de cada problema
+ tal y como se muestra en los ejemplos de ejecución.
+ 
+ 
+ 
+ #Problema: Cena de los filósofos#
+ 
+ La sección crítica es el run() de la clase Filósofo concretamente el bucle while ya que si en un momento todos los hilos cogen un palillo el programa acaba en interbloqueo.
+ 
+ public void run() {
+		try {
+
+			doAction("pensando...");
+
+			while (true) {
+
+				synchronized (leftFork) {
+					doAction(LocalTime.now().format(isoFecha).toString() + ": Coje el palillo izquierdo");
+
+					synchronized (rightFork) {
+						doAction(LocalTime.now().format(isoFecha).toString() + ": Coje el palillo derecho");
+					}
+					doAction(LocalTime.now().format(isoFecha).toString() + ": Deja el palillo derecho");
+				}
+				doAction(LocalTime.now().format(isoFecha).toString() + ": Deja el palillo izquierdo");
+				doAction(LocalTime.now().format(isoFecha).toString() + ": pensando...");
+			}
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+	}
+ 
+ 
+ 
+ #Problema: El puente#
+ 
+ La sección crítica es el propio puente y los métodos que la componen concretamente la autorizacionPaso() ya que es la que regula el paso de cada hilo.
+ 
+ synchronized public int getPeso() {
+		return peso;
+	}
+
+	synchronized public int getNumPersonas() {
+		return numPersonas;
+	}
+
+	synchronized public boolean autorizacionPaso(Persona persona) {
+
+		boolean result;
+
+		if (this.peso + persona.getPeso() <= Puente.PESO_MAXIMO && this.numPersonas < Puente.MAX_PERSONAS) {
+			this.numPersonas++;
+			this.peso += persona.getPeso();
+			result = true;
+		} else {
+			result = false;
+		}
+		return result;
+	}
+
+	synchronized public void terminaPaso(Persona persona) {
+		this.peso -= persona.getPeso();
+		this.numPersonas--;
+
+	}
