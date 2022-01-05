@@ -18,7 +18,7 @@ public class Ping {
 
 		try {
 
-			System.out.println("D�nde quieres guardar la salida?\n");
+			System.out.println("Dónde quieres guardar la salida?\n");
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setSelectedFile(new File("ping.txt"));
 			fileChooser.showSaveDialog(null);
