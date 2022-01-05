@@ -17,19 +17,17 @@ public class Ping {
 		Scanner sn = new Scanner(System.in);
 
 		try {
-			
-			
+
 			System.out.println("D�nde quieres guardar la salida?\n");
 			JFileChooser fileChooser = new JFileChooser();
 			fileChooser.setSelectedFile(new File("ping.txt"));
 			fileChooser.showSaveDialog(null);
-			File file= fileChooser.getSelectedFile();
-			 
+			File file = fileChooser.getSelectedFile();
 
 			if (!file.exists()) {
-				System.out.println("\t �El archivo se ha creado!\n");
+				System.out.println("\t ¡El archivo se ha creado!\n");
 			} else {
-				System.out.println("\t �El archivo se ha sobreescrito!\n");
+				System.out.println("\t ¡El archivo se ha sobreescrito!\n");
 			}
 
 			System.out.println("Introduce un numero de peticiones:\n");
@@ -41,11 +39,12 @@ public class Ping {
 
 			System.out.println("¡El proceso ha terminado!");
 			System.out.println("Verifica tu archivo y �que pases un buen d�a!");
-			
+
 			sn.close();
 
 		} catch (InputMismatchException ex) {
-			System.out.println("Has introducido una letra!\nEl programa ha parado.\nIntroduce un n�mero la pr�xima vez =D.");
+			System.out.println(
+					"Has introducido una letra!\nEl programa ha parado.\nIntroduce un número la pr�xima vez =D.");
 		} catch (IOException ex) {
 			System.out.println(ex.getMessage());
 		}
